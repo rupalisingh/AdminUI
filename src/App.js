@@ -1,12 +1,13 @@
 import './App.css';
 import React from 'react';
 import Main from './components/Main';
+import AuthProvider from './context/AuthProvider';
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
       <Main/>
-    </div>
+    </AuthProvider>
   );
 }
 

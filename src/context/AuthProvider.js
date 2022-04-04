@@ -1,9 +1,31 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-function AuthProvider() {
-  return (
-    <div>AuthProvider</div>
-  )
+export const AuthContext = React.createContext();
+
+function AuthProvider({ children }) {
+  const [userData, setUserData] = useState([{}]);
+
+  const getData = async () => {
+    let res = await axios.get(
+      "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
+    );
+    return res.data;
+  };
+
+  useEffect(() => {
+    (async () => {
+      let data = await getData();
+      setUserData(data);
+    })()
+    // console.log(userData)
+}, []);
+
+  const value = {
+      userData
+  }
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export default AuthProvider
+export default AuthProvider;

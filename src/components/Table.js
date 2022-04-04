@@ -1,44 +1,59 @@
-import React from "react";
+import React, { useContext } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { AuthContext } from "../context/AuthProvider";
 
 const columns = [
   { field: "id", headerName: "ID", width: 70, sortable: false },
-  { field: "Name", headerName: "Name", width: 250, sortable: false },
-  { field: "Email", headerName: "Email", width: 250, sortable: false },
   {
-    field: "Role",
+    field: "name",
+    headerName: "Name",
+    width: 300,
+    sortable: false,
+    headerAlign: "center",
+  },
+  {
+    field: "email",
+    headerName: "Email",
+    width: 300,
+    sortable: false,
+    headerAlign: "center",
+  },
+  {
+    field: "role",
     headerName: "Role",
     type: "number",
-    width: 200,
+    width: 300,
     sortable: false,
+    headerAlign: "center",
   },
   {
     field: "Actions",
     headerName: "Actions",
     sortable: false,
-    width: 200,
+    width: 300,
+    headerAlign: "center",
   },
 ];
 
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
-
 export default function Table() {
+  const { userData } = useContext(AuthContext);
+  let rows = [];
+  userData.map((user, index) => (rows[index] = user));
+  //   console.log(userData.id)
+  //   const getRow = () => {
+  //     //   console.log(userData);
+  //     userData.map((user) => {
+  //       return user;
+  //     });
+  //   };
+
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 600, width: "100%" }}>
       <DataGrid
         rows={rows}
+        // getRowId = {rows => console.log("Row" + rows.id)}
         columns={columns}
-        pageSize={5}
+        pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection
       />

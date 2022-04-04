@@ -1,5 +1,5 @@
 .Search_bar{
-    padding: 3rem;
+    padding: 0.8rem;
 }
 
 .outlined-basic{
@@ -7,5 +7,15 @@
 }
 
 .table{
-    padding: 2rem;
+    padding: 0.1rem;
+}
+
+.MuiDataGrid-row{
+    border: 1px solid red;
+}
+
+.footer{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
