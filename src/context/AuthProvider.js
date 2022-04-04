@@ -5,6 +5,7 @@ export const AuthContext = React.createContext();
 
 function AuthProvider({ children }) {
   const [userData, setUserData] = useState([{}]);
+const [currentSearchText, setCurrentSearchedText] = useState('')
 
   const getData = async () => {
     let res = await axios.get(
@@ -22,7 +23,9 @@ function AuthProvider({ children }) {
 }, []);
 
   const value = {
-      userData
+      userData,
+      currentSearchText,
+      setCurrentSearchedText,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { AuthContext } from "../context/AuthProvider";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70, sortable: false },
+//   { field: "id", headerName: "ID", width: 70, sortable: false },
   {
     field: "name",
     headerName: "Name",
@@ -36,22 +36,21 @@ const columns = [
 ];
 
 export default function Table() {
-  const { userData } = useContext(AuthContext);
+  const { userData, currentSearchText } = useContext(AuthContext);
   let rows = [];
-  userData.map((user, index) => (rows[index] = user));
-  //   console.log(userData.id)
-  //   const getRow = () => {
-  //     //   console.log(userData);
-  //     userData.map((user) => {
-  //       return user;
-  //     });
-  //   };
+  if(currentSearchText === ''){
+    userData.map((user, index) => (rows[index] = user)) 
+  }else{
+      let val = currentSearchText.toLowerCase()
+      let filteredArr = []
+      filteredArr = userData.filter(user => user.name.toLowerCase().includes(val) || user.email.toLowerCase().includes(val) || user.role.toLowerCase().includes(val))
+      filteredArr.map((user, index) => rows[index] = user)
+  }
 
   return (
     <div style={{ height: 600, width: "100%" }}>
       <DataGrid
         rows={rows}
-        // getRowId = {rows => console.log("Row" + rows.id)}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}

@@ -6,7 +6,11 @@ import Paginationblock from "./Paginationblock";
 import { AuthContext } from "../context/AuthProvider";
 
 function Main() {
-  const { userData } = useContext(AuthContext);
+  const { userData, setCurrentSearchedText } = useContext(AuthContext);
+  const handleChange = (e) => {
+    let val = e.target.value
+    setCurrentSearchedText(val)
+  };
   // console.log(userData)
   return (
     <>
@@ -16,6 +20,7 @@ function Main() {
             <TextField
               className="outlined-basic"
               placeholder="Search By Name, Email or Role"
+              onChange={handleChange}
             />
             <div className="table">
               <Table />
