@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Button, TextField } from "@mui/material";
 import "../css/Main.css";
 import Table from "./Table";
-import Paginationblock from "./Paginationblock";
 import { AuthContext } from "../context/AuthProvider";
 
 function Main() {
@@ -11,7 +10,6 @@ function Main() {
     let val = e.target.value
     setCurrentSearchedText(val)
   };
-  // console.log(userData)
   return (
     <>
       {userData.length > 1 ? (
@@ -29,7 +27,6 @@ function Main() {
               <Button variant="contained" color="error">
                 Delete Selected
               </Button>
-              <Paginationblock />
             </div>
           </div>
         </>
