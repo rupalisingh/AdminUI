@@ -7,6 +7,8 @@ function AuthProvider({ children }) {
   const [userData, setUserData] = useState([{}]);
   const [currentSearchText, setCurrentSearchedText] = useState("");
   const [selectedRows, setselectedRows] = useState([])
+  const [filteredRows, setFilteredRows] = useState([{}])
+  const [Editable, setEditable] = useState([{id : -1, editable : "false"}])
 
   const getData = async () => {
     let res = await axios.get(
@@ -20,16 +22,20 @@ function AuthProvider({ children }) {
       let data = await getData();
       setUserData(data);
     })();
-    // console.log(userData)
+    console.log(userData)
   }, []);
 
   const value = {
     userData,
     currentSearchText,
     selectedRows,
+    filteredRows,
+    Editable,
     setUserData,
     setCurrentSearchedText,
-    setselectedRows
+    setselectedRows,
+    setFilteredRows,
+    setEditable
     
   };
 

@@ -1,0 +1,13 @@
+table{
+    padding-left:  8rem;
+    padding-right: 8rem;
+}
+
+th{
+    width: 25%;
+    border-bottom: 1px solid grey;
+
+}
+td{
+    text-align: center;
+}

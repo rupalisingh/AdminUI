@@ -6,13 +6,6 @@
     width: 100%;
 }
 
-.table{
-    padding: 0.1rem;
-}
-
-.MuiDataGrid-row{
-    border: 1px solid red;
-}
 
 .footer{
     display: flex;

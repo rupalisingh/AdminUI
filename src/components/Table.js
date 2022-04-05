@@ -1,47 +1,20 @@
 import React, { useContext } from "react";
-import { DataGrid } from "@mui/x-data-grid";
 import { AuthContext } from "../context/AuthProvider";
-import Paginationblock from "./Paginationblock";
-
-const columns = [
-  //   { field: "id", headerName: "ID", width: 70, sortable: false },
-  {
-    field: "name",
-    headerName: "Name",
-    width: 300,
-    sortable: false,
-    headerAlign: "center",
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 300,
-    sortable: false,
-    headerAlign: "center",
-  },
-  {
-    field: "role",
-    headerName: "Role",
-    type: "number",
-    width: 300,
-    sortable: false,
-    headerAlign: "center",
-  },
-  {
-    field: "Actions",
-    headerName: "Actions",
-    sortable: false,
-    width: 300,
-    headerAlign: "center",
-  },
-];
+import { Checkbox } from "@mui/material";
+import ActionButtons from "./ActionButtons";
+import "../css/Table.css";
 
 export default function Table() {
   const {
     userData,
     currentSearchText,
     setselectedRows,
+    selectedRows,
+    setFilteredRows,
+    setUserData,
+    Editable,
   } = useContext(AuthContext);
+
   let rows = [];
   if (currentSearchText === "") {
     userData.map((user, index) => (rows[index] = user));
@@ -54,27 +27,56 @@ export default function Table() {
         user.email.toLowerCase().includes(val) ||
         user.role.toLowerCase().includes(val)
     );
+    setFilteredRows(filteredArr);
     filteredArr.map((user, index) => (rows[index] = user));
   }
 
+  const handleSelect = (e, id) => {
+    setselectedRows([...selectedRows, id]);
+  };
+
+  const getEditableStatus = (id) => {
+    const res = Editable.length > 1 ? Editable.filter((status) => status.id === id) : Editable[0]
+    console.log(res.editable)
+    return res;
+  };
+
   return (
-    <div style={{ height: 600, width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        checkboxSelection
-        components={{
-          Pagination: Paginationblock,
-        }}
-        onSelectionModelChange={(ids) => {
-          const selectedIDs = new Set(ids);
-          const selectedRows = rows.filter((row) => selectedIDs.has(row.id))
-          const onlyid = selectedRows.map(row => row.id)
-          setselectedRows(onlyid);
-        }}
-      />
-    </div>
+    <>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <Checkbox key={-1} />
+            </th>
+            <th scope="col">Name</th>
+
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => {
+            return (
+              <tr key={row.id}>
+                <td>
+                  <Checkbox
+                    key={row.id}
+                    onChange={(e) => handleSelect(e, row.id)}
+                  />
+                </td>
+                <td contentEditable={getEditableStatus(row.id)}>{row.name}</td>
+                <td contentEditable={getEditableStatus(row.id)}>{row.email}</td>
+                <td contentEditable={getEditableStatus(row.id)}>{row.role}</td>
+                <td>
+                  <ActionButtons index={row.id} />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
   );
 }
