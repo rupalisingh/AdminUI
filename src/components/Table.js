@@ -3,7 +3,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { AuthContext } from "../context/AuthProvider";
 import Paginationblock from "./Paginationblock";
 
-
 const columns = [
   //   { field: "id", headerName: "ID", width: 70, sortable: false },
   {
@@ -37,13 +36,13 @@ const columns = [
   },
 ];
 
-
 export default function Table() {
-  const { userData, currentSearchText} = useContext(
-    AuthContext
-  );
+  const {
+    userData,
+    currentSearchText,
+    setselectedRows,
+  } = useContext(AuthContext);
   let rows = [];
-
   if (currentSearchText === "") {
     userData.map((user, index) => (rows[index] = user));
   } else {
@@ -68,6 +67,12 @@ export default function Table() {
         checkboxSelection
         components={{
           Pagination: Paginationblock,
+        }}
+        onSelectionModelChange={(ids) => {
+          const selectedIDs = new Set(ids);
+          const selectedRows = rows.filter((row) => selectedIDs.has(row.id))
+          const onlyid = selectedRows.map(row => row.id)
+          setselectedRows(onlyid);
         }}
       />
     </div>

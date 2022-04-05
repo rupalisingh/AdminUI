@@ -6,6 +6,7 @@ export const AuthContext = React.createContext();
 function AuthProvider({ children }) {
   const [userData, setUserData] = useState([{}]);
   const [currentSearchText, setCurrentSearchedText] = useState("");
+  const [selectedRows, setselectedRows] = useState([])
 
   const getData = async () => {
     let res = await axios.get(
@@ -25,7 +26,10 @@ function AuthProvider({ children }) {
   const value = {
     userData,
     currentSearchText,
-    setCurrentSearchedText
+    selectedRows,
+    setUserData,
+    setCurrentSearchedText,
+    setselectedRows
     
   };
 
