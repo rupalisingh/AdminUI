@@ -14,7 +14,7 @@ function Main() {
   };
 
   const handleDelete = () => {
-    let newUserData = userData.filter((user) => !selectedRows.includes(user.id));
+    let newUserData = userData.filter((user) => !selectedRows.includes(user[0].id));
     console.log(selectedRows)
     console.log(newUserData)
     setUserData(newUserData)

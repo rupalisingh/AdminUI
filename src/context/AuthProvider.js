@@ -8,7 +8,6 @@ function AuthProvider({ children }) {
   const [currentSearchText, setCurrentSearchedText] = useState("");
   const [selectedRows, setselectedRows] = useState([])
   const [filteredRows, setFilteredRows] = useState([{}])
-  const [Editable, setEditable] = useState([{id : -1, editable : "false"}])
 
   const getData = async () => {
     let res = await axios.get(
@@ -20,9 +19,11 @@ function AuthProvider({ children }) {
   useEffect(() => {
     (async () => {
       let data = await getData();
-      setUserData(data);
+      let editable = "false"
+      let DatawithEditStatus = data.map(user => [{...user, editable}])
+      // console.log(DatawithEditStatus)
+      setUserData(DatawithEditStatus);
     })();
-    console.log(userData)
   }, []);
 
   const value = {
@@ -30,13 +31,10 @@ function AuthProvider({ children }) {
     currentSearchText,
     selectedRows,
     filteredRows,
-    Editable,
     setUserData,
     setCurrentSearchedText,
     setselectedRows,
-    setFilteredRows,
-    setEditable
-    
+    setFilteredRows,    
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

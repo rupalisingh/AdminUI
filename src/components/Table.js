@@ -12,20 +12,20 @@ export default function Table() {
     selectedRows,
     setFilteredRows,
     setUserData,
-    Editable,
   } = useContext(AuthContext);
+
 
   let rows = [];
   if (currentSearchText === "") {
-    userData.map((user, index) => (rows[index] = user));
+    userData.map((user, index) => (rows[index] = user[0]));
   } else {
     let val = currentSearchText.toLowerCase();
     let filteredArr = [];
     filteredArr = userData.filter(
       (user) =>
-        user.name.toLowerCase().includes(val) ||
-        user.email.toLowerCase().includes(val) ||
-        user.role.toLowerCase().includes(val)
+        user[0].name.toLowerCase().includes(val) ||
+        user[0].email.toLowerCase().includes(val) ||
+        user[0].role.toLowerCase().includes(val)
     );
     setFilteredRows(filteredArr);
     filteredArr.map((user, index) => (rows[index] = user));
@@ -35,11 +35,6 @@ export default function Table() {
     setselectedRows([...selectedRows, id]);
   };
 
-  const getEditableStatus = (id) => {
-    const res = Editable.length > 1 ? Editable.filter((status) => status.id === id) : Editable[0]
-    console.log(res.editable)
-    return res;
-  };
 
   return (
     <>
@@ -50,7 +45,6 @@ export default function Table() {
               <Checkbox key={-1} />
             </th>
             <th scope="col">Name</th>
-
             <th scope="col">Email</th>
             <th scope="col">Role</th>
             <th scope="col">Actions</th>
@@ -66,11 +60,11 @@ export default function Table() {
                     onChange={(e) => handleSelect(e, row.id)}
                   />
                 </td>
-                <td contentEditable={getEditableStatus(row.id)}>{row.name}</td>
-                <td contentEditable={getEditableStatus(row.id)}>{row.email}</td>
-                <td contentEditable={getEditableStatus(row.id)}>{row.role}</td>
+                <td contentEditable = {row.editable}>{row.name}</td>
+                <td contentEditable = {row.editable}>{row.email}</td>
+                <td contentEditable = {row.editable}>{row.role}</td>
                 <td>
-                  <ActionButtons index={row.id} />
+                  <ActionButtons id={row.id} index = {index} />
                 </td>
               </tr>
             );
