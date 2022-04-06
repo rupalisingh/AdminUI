@@ -8,6 +8,7 @@ function AuthProvider({ children }) {
   const [currentSearchText, setCurrentSearchedText] = useState("");
   const [selectedRows, setselectedRows] = useState([])
   const [filteredUserData, setfilteredUserData] = useState([{}])
+  const [check,setcheck] = useState(false)
 
   const getData = async () => {
     let res = await axios.get(
@@ -20,7 +21,8 @@ function AuthProvider({ children }) {
     (async () => {
       let data = await getData();
       let editable = "false"
-      let DatawithEditStatus = data.map(user => [{...user, editable}])
+      let isChecked = false
+      let DatawithEditStatus = data.map(user => [{...user, editable, isChecked}])
       setUserData(DatawithEditStatus);
     })();
   }, []);
@@ -30,10 +32,12 @@ function AuthProvider({ children }) {
     currentSearchText,
     selectedRows,
     filteredUserData,
+    check,
     setUserData,
     setCurrentSearchedText,
     setselectedRows,
-    setfilteredUserData
+    setfilteredUserData,
+    setcheck
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

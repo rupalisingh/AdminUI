@@ -3,12 +3,11 @@ import { TextField } from "@mui/material";
 import { AuthContext } from "../context/AuthProvider";
 
 function Search() {
-  const { setCurrentSearchedText, userData, setUserData, setfilteredUserData } = useContext(
+  const { setCurrentSearchedText, userData, setfilteredUserData } = useContext(
     AuthContext
   );
 
   const filterUserData = (val) => {
-      console.log(userData)
       let filteredArr = []
       filteredArr = userData.filter(
         (user) =>
@@ -16,7 +15,6 @@ function Search() {
           user[0].email.toLowerCase().includes(val) ||
           user[0].role.toLowerCase().includes(val)
       );
-    console.log(filteredArr)
     setfilteredUserData(filteredArr)
   };
 
