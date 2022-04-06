@@ -15,8 +15,6 @@ function ActionButtons(props) {
     let clonedUserData = userData.map(user => user)
     clonedUserData[props.index][0].editable = "true"
     setUserData(clonedUserData)
-
-    
   };
 
   const handleSave = () => {

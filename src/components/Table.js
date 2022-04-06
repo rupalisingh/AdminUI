@@ -4,31 +4,16 @@ import { Checkbox } from "@mui/material";
 import ActionButtons from "./ActionButtons";
 import "../css/Table.css";
 
-export default function Table() {
+export default function Table(props) {
   const {
     userData,
     currentSearchText,
     setselectedRows,
     selectedRows,
     setUserData,
+    
   } = useContext(AuthContext);
 
-
-  let rows = [];
-  if (currentSearchText === "") {
-    userData.map((user, index) => (rows[index] = user[0]));
-    console.log(rows)
-  } else {
-    let val = currentSearchText.toLowerCase();
-    let filteredArr = [];
-    filteredArr = userData.filter(
-      (user) =>
-        user[0].name.toLowerCase().includes(val) ||
-        user[0].email.toLowerCase().includes(val) ||
-        user[0].role.toLowerCase().includes(val)
-    );
-    filteredArr.map((user, index) => (rows[index] = user[0]));
-  }
 
   const handleSelect = (e, id) => {
     setselectedRows([...selectedRows, id]);
@@ -50,21 +35,20 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          {console.log(currentSearchText)}
-          {rows.map((row, index) => {
+          {props.rows.map((row, index) => {
             return (
-              <tr key={row.id}>
+              <tr key={row[0].id}>
                 <td>
                   <Checkbox
-                    key={row.id}
-                    onChange={(e) => handleSelect(e, row.id)}
+                    key={row[0].id}
+                    onChange={(e) => handleSelect(e, row[0].id)}
                   />
                 </td>
-                <td contentEditable = {row.editable}>{row.name}</td>
-                <td contentEditable = {row.editable}>{row.email}</td>
-                <td contentEditable = {row.editable}>{row.role}</td>
+                <td contentEditable = {row[0].editable}>{row[0].name}</td>
+                <td contentEditable = {row[0].editable}>{row[0].email}</td>
+                <td contentEditable = {row[0].editable}>{row[0].role}</td>
                 <td>
-                  <ActionButtons id={row.id} index = {index} />
+                  <ActionButtons id={row[0].id} index = {index} />
                 </td>
               </tr>
             );
