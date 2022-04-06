@@ -11,19 +11,17 @@ function ActionButtons(props) {
     setUserData(newUserData);
   };
 
-  const handleEdit = (id) => {
+  const handleEdit = () => {
     let clonedUserData = userData.map(user => user)
     clonedUserData[props.index][0].editable = "true"
-    // console.log("cloneduserDtaa" ,clonedUserData)
     setUserData(clonedUserData)
 
     
   };
 
-  const handleSave = (id) => {
+  const handleSave = () => {
     let clonedUserData = userData.map(user => user)
     clonedUserData[props.index][0].editable = "false"
-    // console.log("cloneduserDtaa" ,clonedUserData)
     setUserData(clonedUserData)
   };
   return (
@@ -31,15 +29,15 @@ function ActionButtons(props) {
       <div>
         {userData[props.index][0].editable === "true" ? (
           <i
-            class="fa fa-floppy-o"
+            className="fa fa-floppy-o"
             aria-hidden="true"
-            onClick={() => handleSave(props.id)}
+            onClick={handleSave}
           ></i>
         ) : (
           <i
             className="fa fa-pencil"
             aria-hidden="true"
-            onClick={() => handleEdit(props.id)}
+            onClick={handleEdit}
           ></i>
         )}
         <i

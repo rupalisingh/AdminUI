@@ -10,7 +10,6 @@ export default function Table() {
     currentSearchText,
     setselectedRows,
     selectedRows,
-    setFilteredRows,
     setUserData,
   } = useContext(AuthContext);
 
@@ -18,6 +17,7 @@ export default function Table() {
   let rows = [];
   if (currentSearchText === "") {
     userData.map((user, index) => (rows[index] = user[0]));
+    console.log(rows)
   } else {
     let val = currentSearchText.toLowerCase();
     let filteredArr = [];
@@ -27,8 +27,7 @@ export default function Table() {
         user[0].email.toLowerCase().includes(val) ||
         user[0].role.toLowerCase().includes(val)
     );
-    setFilteredRows(filteredArr);
-    filteredArr.map((user, index) => (rows[index] = user));
+    filteredArr.map((user, index) => (rows[index] = user[0]));
   }
 
   const handleSelect = (e, id) => {
@@ -51,6 +50,7 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
+          {console.log(currentSearchText)}
           {rows.map((row, index) => {
             return (
               <tr key={row.id}>

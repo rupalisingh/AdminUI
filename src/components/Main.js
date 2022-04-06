@@ -1,34 +1,25 @@
 import React, { useContext } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import "../css/Main.css";
 import Table from "./Table";
+import Search from "./Search"
 import { AuthContext } from "../context/AuthProvider";
 
 function Main() {
-  const { userData, setUserData, setCurrentSearchedText, selectedRows } = useContext(
+  const { userData, setUserData, selectedRows } = useContext(
     AuthContext
   );
-  const handleChange = (e) => {
-    let val = e.target.value;
-    setCurrentSearchedText(val);
-  };
+  
 
   const handleDelete = () => {
     let newUserData = userData.filter((user) => !selectedRows.includes(user[0].id));
-    console.log(selectedRows)
-    console.log(newUserData)
     setUserData(newUserData)
   };
   return (
     <>
       {userData.length > 1 || userData.length === 0 ? (
         <>
-          <div className="Search_bar">
-            <TextField
-              className="outlined-basic"
-              placeholder="Search By Name, Email or Role"
-              onChange={handleChange}
-            />
+          <Search/>
             <div className="table">
               <Table />
             </div>
@@ -37,7 +28,6 @@ function Main() {
                 Delete Selected
               </Button>
             </div>
-          </div>
         </>
       ) : (
         <div>Loading Page...</div>
